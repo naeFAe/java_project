@@ -3,12 +3,35 @@ package com.company.service;
 import com.company.domain.Curs;
 import com.company.domain.Examen;
 import com.company.domain.Profesor;
+import com.company.domain.Student;
 import com.company.persistance.ProfesorRepo;
 
 import javax.sound.midi.InvalidMidiDataException;
 
 public class ProfesorService {
     private ProfesorRepo profesorRepo =new ProfesorRepo();
+
+    public void addProfesor(Profesor profesor){
+            profesorRepo.add(profesor);
+    }
+    public void printAllProf(){
+        for(int i=0;i< profesorRepo.getSize();i++)
+            System.out.println(profesorRepo.get(i));
+    }
+    public  void sortProfesori(){
+        for(int i = 0; i < profesorRepo.getSize()-1; i++){
+            for(int j = i+1; j < profesorRepo.getSize(); j++)
+            {
+                Profesor studentTemp = new Profesor(null,null,null);
+                if(profesorRepo.get(i).getNume().compareTo(profesorRepo.get(j).getNume()) > 0 )
+                {
+                    studentTemp = profesorRepo.get(i);
+                    profesorRepo.update(i, profesorRepo.get(j));
+                    profesorRepo.update(j, studentTemp);
+                }
+            }
+        }
+    }
 
     public void registerNewProfesor(String prenume,String nume,String nume_curs,String ora_curs,String zi_curs,String data_examen,String ora_examen,String sala_examen ) throws InvalidMidiDataException {
         if(prenume == null || prenume.trim().isEmpty()){
@@ -48,4 +71,5 @@ public class ProfesorService {
         Profesor profesor = new Profesor(prenume,nume,curs);
         profesorRepo.add(profesor);
     }
+
 }

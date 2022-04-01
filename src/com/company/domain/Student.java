@@ -3,9 +3,9 @@ package com.company.domain;
 public class Student extends Persoana {
     private String clasa;
     private String grupa;
-    private int an;
+    private String an;
 
-    public Student(String prenume, String nume, String clasa, String grupa, int an) {
+    public Student(String prenume, String nume, String clasa, String grupa, String an) {
         super(prenume, nume);
         this.clasa = clasa;
         this.grupa = grupa;
@@ -53,11 +53,11 @@ public class Student extends Persoana {
         this.grupa = grupa;
     }
 
-    public int getAn() {
+    public String getAn() {
         return an;
     }
 
-    public void setAn(int an) {
+    public void setAn(String an) {
         this.an = an;
     }
 }

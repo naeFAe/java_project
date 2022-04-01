@@ -45,4 +45,14 @@ public class Curs {
     public void setExamen(Examen examen) {
         this.examen = examen;
     }
+
+    @Override
+    public String toString() {
+        return "Curs{" +
+                "nume='" + nume + '\'' +
+                ", ora='" + ora + '\'' +
+                ", zi='" + zi + '\'' +
+                ", examen=" + examen +
+                '}';
+    }
 }

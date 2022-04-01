@@ -17,6 +17,7 @@ public class StudentRepo implements GenericRepo<Student> {
         return elevi.get(id);
     }
 
+
     @Override
     public void update(int index, Student entity) {
         elevi.set(index, entity);

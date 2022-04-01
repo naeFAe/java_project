@@ -34,4 +34,13 @@ public class Examen {
     public void setSala(String sala) {
         this.sala = sala;
     }
+
+    @Override
+    public String toString() {
+        return "Examen{" +
+                "data_examen='" + data_examen + '\'' +
+                ", ora_examen='" + ora_examen + '\'' +
+                ", sala='" + sala + '\'' +
+                '}';
+    }
 }
