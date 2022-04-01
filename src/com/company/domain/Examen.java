@@ -1,4 +1,4 @@
-package com.company.domains;
+package com.company.domain;
 
 public class Examen {
     private String data_examen;

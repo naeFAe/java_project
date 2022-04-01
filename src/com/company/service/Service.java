@@ -3,7 +3,7 @@ package com.company.service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.company.domains.*;
+import com.company.domain.*;
 
 public class Service {
 

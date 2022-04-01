@@ -1,4 +1,4 @@
-package com.company.domains;
+package com.company.domain;
 
 public class Student extends Persoana {
     private String clasa;

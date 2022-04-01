@@ -1,4 +1,4 @@
-package com.company.domains;
+package com.company.domain;
 
 public abstract class Persoana {
     protected String prenume;

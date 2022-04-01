@@ -1,6 +1,6 @@
 package com.company.main;
 
-import com.company.domains.*;
+import com.company.domain.*;
 import com.company.service.Service;
 
 public class Main {

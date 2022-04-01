@@ -1,4 +1,4 @@
-package com.company.domains;
+package com.company.domain;
 
 public class Seminar extends Curs {
     private int pondere;
