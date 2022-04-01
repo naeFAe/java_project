@@ -44,5 +44,21 @@ public class Student extends Persoana {
     public String getNume() {
         return nume;
     }
+
+    public String getGrupa() {
+        return grupa;
+    }
+
+    public void setGrupa(String grupa) {
+        this.grupa = grupa;
+    }
+
+    public int getAn() {
+        return an;
+    }
+
+    public void setAn(int an) {
+        this.an = an;
+    }
 }
 
