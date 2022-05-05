@@ -44,6 +44,7 @@ public class Curs {
 
     public void setExamen(Examen examen) {
         this.examen = examen;
+        System.out.println("De pe celalalt folder");
     }
 
     @Override
@@ -56,3 +57,4 @@ public class Curs {
                 '}';
     }
 }
+
