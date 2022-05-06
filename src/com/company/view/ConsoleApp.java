@@ -13,7 +13,8 @@ public class ConsoleApp {
     private StudentService studentService = new StudentService();
 
     private CursService cursService =new CursService();
-    private ExamenService examenService = new ExamenService();
+
+    private SeminarService seminarService =new SeminarService();
 
     private Audit audit = new Audit();
 
@@ -36,12 +37,12 @@ public class ConsoleApp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //examen
         try {
-            examenService.read();
+            seminarService.read();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
     public static void main(String args[]) {
         ConsoleApp app = new ConsoleApp();
@@ -56,7 +57,7 @@ public class ConsoleApp {
 
     private int readOption(){
         int option = readInt();
-        if (option >= 1 && option <= 9)
+        if (option >= 1 && option <= 11)
             return option;
 
         System.out.println("Invalid option. Try again");
@@ -74,7 +75,9 @@ public class ConsoleApp {
         System.out.println("6. afiseaza toti profesorii");
         System.out.println("7.adauga curs");
         System.out.println("8.afiseaza toate cursurile");
-        System.out.println("9. exit");
+        System.out.println("9.adauga seminar");
+        System.out.println("10.afiseaza toate seminarele");
+        System.out.println("11. exit");
     }
 
     private int readInt() {
@@ -127,6 +130,18 @@ public class ConsoleApp {
                 cursService.printAllCurs();
                 audit.add("afisat cursuri");
             case 9:
+                try {
+                    seminarService.write(readSeminar());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                audit.add("adaugat seminar");
+                break;
+            case 10:
+                seminarService.printAllSeminar();
+                audit.add("afisat seminare");
+                break;
+            case 11:
                 audit.add("exit");
                 System.exit(0);
         }
@@ -204,6 +219,30 @@ public class ConsoleApp {
         return curs;
     }
 
+    Seminar readSeminar(){
+        System.out.println("Nume curs: ");
+        String nume = s.nextLine();
+        System.out.println("Ora: ");
+        String ora = s.nextLine();
+        System.out.println("Zi: ");
+        String zi = s.nextLine();
+        System.out.println("Data examen: ");
+        String data_examen = s.nextLine();
+        System.out.println("Ora examen: ");
+        String ora_examen = s.nextLine();
+        System.out.println("Sala: ");
+        String sala = s.nextLine();
+        System.out.println("Pondere colocviu: ");
+        String pondere = s.nextLine();
+        Examen colocviu =new Examen(data_examen,ora_examen,sala);
+        Seminar seminar = new Seminar(nume,ora,zi,colocviu,pondere);
+        try{
+            seminarService.registerNewSeminar(nume,ora,zi,data_examen,ora_examen,sala,pondere);
+        }catch (InvalidMidiDataException e){
+            e.printStackTrace();
+        }
+        return seminar;
+    }
 
 
 }
