@@ -13,6 +13,10 @@ public class Curs {
         this.examen = examen;
     }
 
+    public Curs(Curs curs) {
+    }
+
+
     public String getOra() {
         return ora;
     }

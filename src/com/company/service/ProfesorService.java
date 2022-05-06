@@ -7,9 +7,18 @@ import com.company.domain.Student;
 import com.company.persistance.ProfesorRepo;
 
 import javax.sound.midi.InvalidMidiDataException;
+import java.io.*;
+import java.util.Vector;
 
-public class ProfesorService {
+public class ProfesorService implements GenericCSV<Profesor>{
+
     private ProfesorRepo profesorRepo =new ProfesorRepo();
+    private static final ProfesorService instance = new ProfesorService();
+    public static ProfesorService getInstance(){
+        return instance;
+    }
+
+
 
     public void addProfesor(Profesor profesor){
             profesorRepo.add(profesor);
@@ -70,6 +79,42 @@ public class ProfesorService {
         Curs curs = new Curs(nume_curs,ora_curs,zi_curs,examen);
         Profesor profesor = new Profesor(prenume,nume,curs);
         profesorRepo.add(profesor);
+    }
+
+
+
+    @Override
+    public void read() throws IOException {
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("files/profesor.csv"));
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                Examen examen = new Examen(values[5], values[6], values[7]);
+                Curs curs = new Curs(values[2], values[3], values[4], examen);
+                Profesor profesor = new Profesor(values[0], values[1], curs);
+                profesorRepo.add(profesor);
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void write(Profesor profesor) throws IOException {
+        try{
+        FileWriter fw = new FileWriter("files/profesor.csv",true);
+        fw.write( "\n"+ profesor.getPrenume() + ',' + profesor.getNume() + ',' + profesor.getCurs().getNume() + ','
+                + profesor.getCurs().getOra() + ',' + profesor.getCurs().getZi() + ',' + profesor.getCurs().getExamen().getData_examen()
+                + ',' +profesor.getCurs().getExamen().getOra_examen() + ','
+                + profesor.getCurs().getExamen().getSala() + ',');
+        fw.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 }

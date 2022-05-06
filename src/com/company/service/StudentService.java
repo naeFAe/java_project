@@ -4,8 +4,9 @@ import com.company.domain.Student;
 import com.company.persistance.StudentRepo;
 
 import javax.sound.midi.InvalidMidiDataException;
+import java.io.*;
 
-public class StudentService {
+public class StudentService implements GenericCSV<Student> {
     private StudentRepo studentRepo = new StudentRepo();
 
     public void printAllStudenti(){
@@ -53,7 +54,34 @@ public class StudentService {
 
     }
 
+    @Override
+    public void read() throws IOException {
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("files/student.csv"));
+            while((line = br.readLine()) != null){
+                String[] values = line.split(",");
+                Student student =new Student(values[0],values[1],values[2],values[3],values[4]);
+                studentRepo.add(student);
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
 
 
 
+    @Override
+    public void write(Student student) throws IOException {
+        try{
+            FileWriter fw = new FileWriter("files/student.csv",true);
+            fw.write("\n" + student.getPrenume() + "," + student.getNume() + "," + student.getGrupa() + "," + student.getClasa() + "," + student.getAn() + ",");
+            fw.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

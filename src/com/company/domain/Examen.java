@@ -11,6 +11,9 @@ public class Examen {
         this.sala = sala;
     }
 
+    public Examen(Examen examen) {
+    }
+
     public String getData_examen() {
         return data_examen;
     }

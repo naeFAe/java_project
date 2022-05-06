@@ -4,16 +4,48 @@ import com.company.service.*;
 import com.company.domain.*;
 
 import javax.sound.midi.InvalidMidiDataException;
+import java.io.IOException;
 import java.util.Scanner;
 public class ConsoleApp {
 
     private Scanner s = new Scanner(System.in);
-    private ProfesorService profesorService = new ProfesorService();
+    private ProfesorService profesorService = ProfesorService.getInstance();
     private StudentService studentService = new StudentService();
 
+    private CursService cursService =new CursService();
+    private ExamenService examenService = new ExamenService();
 
+    private Audit audit = new Audit();
+
+    private void loadCSVfiles() {
+        //profesor
+        try {
+            profesorService.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //student
+        try {
+            studentService.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //curs
+        try {
+            cursService.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //examen
+        try {
+            examenService.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String args[]) {
         ConsoleApp app = new ConsoleApp();
+        app.loadCSVfiles();
         while (true) {
             app.showMenu();
             int option;
@@ -24,7 +56,7 @@ public class ConsoleApp {
 
     private int readOption(){
         int option = readInt();
-        if (option >= 1 && option <= 7)
+        if (option >= 1 && option <= 9)
             return option;
 
         System.out.println("Invalid option. Try again");
@@ -40,7 +72,9 @@ public class ConsoleApp {
         System.out.println("4. ordoneaza crescator profesorii");
         System.out.println("5. afiseaza toti stidentii ");
         System.out.println("6. afiseaza toti profesorii");
-        System.out.println("7. exit");
+        System.out.println("7.adauga curs");
+        System.out.println("8.afiseaza toate cursurile");
+        System.out.println("9. exit");
     }
 
     private int readInt() {
@@ -50,29 +84,55 @@ public class ConsoleApp {
     private void execute(int option){
         switch (option){
             case 1:
-                readStudent();
+                try {
+                    studentService.write(readStudent());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                audit.add("adaugat student");
                 break;
             case 2:
-                readProfesor();
+                try {
+                    profesorService.write(readProfesor());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                audit.add("adaugat profesor");
                 break;
             case 3:
                 studentService.sortElevi();
+                audit.add("sortat studenti");
                 break;
             case 4:
                 profesorService.sortProfesori();
+                audit.add("sortat profesori");
                 break;
             case 5:
                 studentService.printAllStudenti();
+                audit.add("afisat studenti");
                 break;
             case 6:
                 profesorService.printAllProf();
+                audit.add("afisat profesori");
                 break;
             case 7:
+                try {
+                    cursService.write(readCurs());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                audit.add("adaugat curs");
+                break;
+            case 8:
+                cursService.printAllCurs();
+                audit.add("afisat cursuri");
+            case 9:
+                audit.add("exit");
                 System.exit(0);
         }
     }
 
-    void readStudent(){
+    Student readStudent(){
         System.out.println("Prenume: ");
         String firstName = s.nextLine();
         System.out.println("Nume: ");
@@ -89,9 +149,9 @@ public class ConsoleApp {
         } catch (InvalidMidiDataException e) {
             e.printStackTrace();
         }
-        //studentService.addStudent(student);
+        return student;
     }
-    void readProfesor(){
+    Profesor readProfesor(){
         System.out.println("Prenume: ");
         String firstName = s.nextLine();
         System.out.println("Nume: ");
@@ -117,7 +177,31 @@ public class ConsoleApp {
         } catch (InvalidMidiDataException e) {
             e.printStackTrace();
         }
+        return profesor;
+    }
 
+    Curs readCurs(){
+        System.out.println("Nume curs: ");
+        String nume = s.nextLine();
+        System.out.println("Ora curs: ");
+        String ora_curs = s.nextLine();
+        System.out.println("Ziua cursului: ");
+        String ziua_curs = s.nextLine();
+        System.out.println("Data examen: ");
+        String data_examen = s.nextLine();
+        System.out.println("Ora examen: ");
+        String ora_examen = s.nextLine();
+        System.out.println("Sala : ");
+        String sala = s.nextLine();
+
+        Examen examen = new Examen(data_examen,ora_examen,sala);
+        Curs curs = new Curs(nume,ora_curs,ziua_curs,examen);
+        try{
+            cursService.registerNewCurs(nume,ora_curs,ziua_curs,data_examen,ora_examen,sala);
+        }catch (InvalidMidiDataException e){
+            e.printStackTrace();
+        }
+        return curs;
     }
 
 
