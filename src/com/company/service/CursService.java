@@ -3,6 +3,7 @@ package com.company.service;
 import com.company.domain.Curs;
 import com.company.domain.Examen;
 import com.company.domain.Student;
+import com.company.exceptions.InvalidDataException;
 import com.company.persistance.CursRepo;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -11,27 +12,27 @@ import java.io.*;
 public class CursService implements GenericCSV<Curs>{
     private CursRepo cursRepo = new CursRepo();
 
-    public void registerNewCurs(String nume, String ora, String zi, String data_examen,String ora_examen,String sala_examen) throws InvalidMidiDataException {
+    public void registerNewCurs(String nume, String ora, String zi, String data_examen,String ora_examen,String sala_examen) throws InvalidDataException {
 
         if(nume == null || nume.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Nume Invalid");
+            throw new InvalidDataException("Nume Invalid");
         }
 
         if(ora == null || ora.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Ora Invalid");
+            throw new InvalidDataException("Ora Invalid");
         }
 
         if(zi == null || zi.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Zi Invalid");
+            throw new InvalidDataException("Zi Invalid");
         }
         if(data_examen == null || data_examen.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Data examen Invalid");
+            throw new InvalidDataException("Data examen Invalid");
         }
         if(ora_examen == null || ora_examen.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Ora examen Invalid");
+            throw new InvalidDataException("Ora examen Invalid");
         }
         if(sala_examen == null || sala_examen.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Sala examen Invalid");
+            throw new InvalidDataException("Sala examen Invalid");
         }
         Examen examen = new Examen(data_examen,ora_examen,sala_examen);
         Curs curs = new Curs(nume,ora,zi,examen);

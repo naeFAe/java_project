@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.domain.Student;
+import com.company.exceptions.InvalidDataException;
 import com.company.persistance.StudentRepo;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -32,21 +33,25 @@ public class StudentService implements GenericCSV<Student> {
     public void addStudent(Student student){
        studentRepo.add(student);
     }
-    public void registerNewStudent(String prenume, String nume, String clasa, String grupa, String an ) throws InvalidMidiDataException {
+    public void registerNewStudent(String prenume, String nume, String clasa, String grupa, String an ) throws InvalidDataException {
         if(prenume == null || prenume.trim().isEmpty()){
-            throw new InvalidMidiDataException("Prenume Invalid");
+            throw new InvalidDataException("Prenume Invalid");
 
         }
         if(nume == null || nume.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Nume Invalid");
+            throw new InvalidDataException("Nume Invalid");
         }
 
         if(clasa == null || clasa.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Clasa Invalid");
+            throw new InvalidDataException("Clasa Invalid");
         }
 
         if(grupa == null || grupa.trim().isEmpty()) {
-            throw new InvalidMidiDataException("Grupa Invalid");
+            throw new InvalidDataException("Grupa Invalid");
+        }
+
+        if(an == null || an.trim().isEmpty()){
+            throw new InvalidDataException("An invalid");
         }
 
         Student student = new Student(prenume, nume, clasa, grupa, an);

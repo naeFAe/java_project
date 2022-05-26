@@ -1,10 +1,14 @@
 package com.company.view;
 
+import com.company.exceptions.InvalidDataException;
+import com.company.jdbc.DBconn;
+import com.company.jdbc.ReadDB;
 import com.company.service.*;
 import com.company.domain.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 public class ConsoleApp {
 
@@ -13,10 +17,10 @@ public class ConsoleApp {
     private StudentService studentService = new StudentService();
 
     private CursService cursService =new CursService();
-
     private SeminarService seminarService =new SeminarService();
-
     private Audit audit = new Audit();
+    private DBconn conn = DBconn.getInstance();
+    private ReadDB readDB = ReadDB.getInstance();
 
     private void loadCSVfiles() {
         //profesor
@@ -46,6 +50,16 @@ public class ConsoleApp {
     }
     public static void main(String args[]) {
         ConsoleApp app = new ConsoleApp();
+        try {
+            app.conn.startConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        app.readDB.loadObjects(app.studentService, app.profesorService, app.cursService);
+
         app.loadCSVfiles();
         while (true) {
             app.showMenu();
@@ -54,7 +68,6 @@ public class ConsoleApp {
             app.execute(option);
         }
     }
-
     private int readOption(){
         int option = readInt();
         if (option >= 1 && option <= 11)
@@ -161,7 +174,7 @@ public class ConsoleApp {
         Student student = new Student(firstName,lastName,clasa,group,an);
         try {
             studentService.registerNewStudent(firstName,lastName,clasa,group,an);
-        } catch (InvalidMidiDataException e) {
+        } catch (InvalidDataException e) {
             e.printStackTrace();
         }
         return student;
@@ -189,7 +202,7 @@ public class ConsoleApp {
         Profesor profesor = new Profesor(firstName,lastName,curs);
         try {
             profesorService.registerNewProfesor(firstName,lastName,nume_curs,ora_curs,zi_curs,data_examen,ora_examen,sala);
-        } catch (InvalidMidiDataException e) {
+        } catch (InvalidDataException e) {
             e.printStackTrace();
         }
         return profesor;
@@ -213,7 +226,7 @@ public class ConsoleApp {
         Curs curs = new Curs(nume,ora_curs,ziua_curs,examen);
         try{
             cursService.registerNewCurs(nume,ora_curs,ziua_curs,data_examen,ora_examen,sala);
-        }catch (InvalidMidiDataException e){
+        }catch (InvalidDataException e){
             e.printStackTrace();
         }
         return curs;

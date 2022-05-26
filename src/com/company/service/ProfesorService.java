@@ -4,6 +4,7 @@ import com.company.domain.Curs;
 import com.company.domain.Examen;
 import com.company.domain.Profesor;
 import com.company.domain.Student;
+import com.company.exceptions.InvalidDataException;
 import com.company.persistance.ProfesorRepo;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -42,37 +43,37 @@ public class ProfesorService implements GenericCSV<Profesor>{
         }
     }
 
-    public void registerNewProfesor(String prenume,String nume,String nume_curs,String ora_curs,String zi_curs,String data_examen,String ora_examen,String sala_examen ) throws InvalidMidiDataException {
+    public void registerNewProfesor(String prenume,String nume,String nume_curs,String ora_curs,String zi_curs,String data_examen,String ora_examen,String sala_examen ) throws InvalidDataException {
         if(prenume == null || prenume.trim().isEmpty()){
-            throw new InvalidMidiDataException("Prenume Invalid");
+            throw new InvalidDataException("Prenume Invalid");
 
         }
         if(nume == null || nume.trim().isEmpty()){
-            throw new InvalidMidiDataException("Nume Invalid");
+            throw new InvalidDataException("Nume Invalid");
         }
 
         if(nume_curs == null || nume_curs.trim().isEmpty()){
-            throw new InvalidMidiDataException("Nume curs Invalid");
+            throw new InvalidDataException("Nume curs Invalid");
         }
 
         if(ora_curs == null || ora_curs.trim().isEmpty()){
-            throw new InvalidMidiDataException("Ora curs Invalida");
+            throw new InvalidDataException("Ora curs Invalida");
         }
 
         if(zi_curs == null || zi_curs.trim().isEmpty()){
-            throw new InvalidMidiDataException("Ziua cursului este Invalida");
+            throw new InvalidDataException("Ziua cursului este Invalida");
         }
 
         if(data_examen == null || data_examen.trim().isEmpty()){
-            throw new InvalidMidiDataException("Data examenului este Invalida");
+            throw new InvalidDataException("Data examenului este Invalida");
         }
 
         if(ora_examen == null || ora_examen.trim().isEmpty()){
-            throw new InvalidMidiDataException("Ora examenului este Invalida");
+            throw new InvalidDataException("Ora examenului este Invalida");
         }
 
         if(sala_examen == null || sala_examen.trim().isEmpty()){
-            throw new InvalidMidiDataException("Sala examenului este Invalida");
+            throw new InvalidDataException("Sala examenului este Invalida");
         }
 
         Examen examen = new Examen(data_examen,ora_examen,sala_examen);
