@@ -16,7 +16,7 @@ public class DBconn {
 
     public void startConn() throws SQLException, ClassNotFoundException{
         if(conn == null){
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc-test","root","1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/catalog","root","1234");
         }
     }
 

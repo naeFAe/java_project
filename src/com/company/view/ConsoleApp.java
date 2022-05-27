@@ -60,7 +60,7 @@ public class ConsoleApp {
 
         app.readDB.loadObjects(app.studentService, app.profesorService, app.cursService);
 
-        app.loadCSVfiles();
+        //app.loadCSVfiles();
         while (true) {
             app.showMenu();
             int option;
