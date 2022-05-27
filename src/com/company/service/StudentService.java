@@ -19,7 +19,7 @@ public class StudentService implements GenericCSV<Student> {
         for(int i = 0; i < studentRepo.getSize()-1; i++){
             for(int j = i+1; j < studentRepo.getSize(); j++)
             {
-                Student studentTemp = new Student(null,null,null,null,null);
+                Student studentTemp = new Student(null,null,null,null,null,null);
                 if(studentRepo.get(i).getNume().compareTo(studentRepo.get(j).getNume()) > 0 )
                 {
                     studentTemp = studentRepo.get(i);
@@ -33,7 +33,7 @@ public class StudentService implements GenericCSV<Student> {
     public void addStudent(Student student){
        studentRepo.add(student);
     }
-    public void registerNewStudent(String prenume, String nume, String clasa, String grupa, String an ) throws InvalidDataException {
+    public void registerNewStudent(String prenume, String nume,String id, String clasa, String grupa, String an ) throws InvalidDataException {
         if(prenume == null || prenume.trim().isEmpty()){
             throw new InvalidDataException("Prenume Invalid");
 
@@ -41,7 +41,9 @@ public class StudentService implements GenericCSV<Student> {
         if(nume == null || nume.trim().isEmpty()) {
             throw new InvalidDataException("Nume Invalid");
         }
-
+        if(id == null || id.trim().isEmpty()){
+            throw new InvalidDataException("Id invalid");
+        }
         if(clasa == null || clasa.trim().isEmpty()) {
             throw new InvalidDataException("Clasa Invalid");
         }
@@ -54,7 +56,7 @@ public class StudentService implements GenericCSV<Student> {
             throw new InvalidDataException("An invalid");
         }
 
-        Student student = new Student(prenume, nume, clasa, grupa, an);
+        Student student = new Student(prenume, nume,id, clasa, grupa, an);
         studentRepo.add(student);
 
     }
@@ -66,7 +68,7 @@ public class StudentService implements GenericCSV<Student> {
             BufferedReader br = new BufferedReader(new FileReader("files/student.csv"));
             while((line = br.readLine()) != null){
                 String[] values = line.split(",");
-                Student student =new Student(values[0],values[1],values[2],values[3],values[4]);
+                Student student =new Student(values[0],values[1],values[2],values[3],values[4],values[5]);
                 studentRepo.add(student);
             }
         }catch (FileNotFoundException e){
@@ -83,7 +85,7 @@ public class StudentService implements GenericCSV<Student> {
     public void write(Student student) throws IOException {
         try{
             FileWriter fw = new FileWriter("files/student.csv",true);
-            fw.write("\n" + student.getPrenume() + "," + student.getNume() + "," + student.getGrupa() + "," + student.getClasa() + "," + student.getAn() + ",");
+            fw.write("\n" + student.getPrenume() + "," + student.getNume() + "," + student.getId() + ","  + student.getGrupa() + "," + student.getClasa() + "," + student.getAn() + ",");
             fw.close();
         }catch (IOException e){
             e.printStackTrace();

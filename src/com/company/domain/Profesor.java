@@ -3,8 +3,8 @@ package com.company.domain;
 public class Profesor extends Persoana {
     private Curs curs;
 
-    public Profesor(String prenume, String nume, Curs curs) {
-        super(prenume, nume);
+    public Profesor(String prenume, String nume, String id,Curs curs) {
+        super(prenume, nume, id);
         this.curs = curs;
     }
 
@@ -18,11 +18,7 @@ public class Profesor extends Persoana {
 
     @Override
     public String toString() {
-        return "profesor{" +
-                "prenume='" + prenume + '\'' +
-                ", nume='" + nume + '\'' +
-                ", curs='" + curs + '\'' +
-                '}';
+        return super.toString();
     }
 
     @Override

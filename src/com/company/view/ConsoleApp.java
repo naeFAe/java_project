@@ -165,15 +165,17 @@ public class ConsoleApp {
         String firstName = s.nextLine();
         System.out.println("Nume: ");
         String lastName = s.nextLine();
+        System.out.println("ID: ");
+        String id =s.nextLine();
         System.out.println("Clasa: ");
         String clasa = s.nextLine();
         System.out.println("Grupa: ");
         String group = s.nextLine();
         System.out.println("An: ");
         String an =s.nextLine();
-        Student student = new Student(firstName,lastName,clasa,group,an);
+        Student student = new Student(firstName,lastName,id,clasa,group,an);
         try {
-            studentService.registerNewStudent(firstName,lastName,clasa,group,an);
+            studentService.registerNewStudent(firstName,lastName,id,clasa,group,an);
         } catch (InvalidDataException e) {
             e.printStackTrace();
         }
@@ -184,6 +186,8 @@ public class ConsoleApp {
         String firstName = s.nextLine();
         System.out.println("Nume: ");
         String lastName = s.nextLine();
+        System.out.println("ID: ");
+        String id = s.nextLine();
         System.out.println("Nume curs: ");
         String nume_curs = s.nextLine();
         System.out.println("Ora curs: ");
@@ -199,9 +203,9 @@ public class ConsoleApp {
 
         Examen examen = new Examen(data_examen,ora_examen,sala);
         Curs curs = new Curs(nume_curs,ora_curs,zi_curs,examen);
-        Profesor profesor = new Profesor(firstName,lastName,curs);
+        Profesor profesor = new Profesor(firstName,lastName,id,curs);
         try {
-            profesorService.registerNewProfesor(firstName,lastName,nume_curs,ora_curs,zi_curs,data_examen,ora_examen,sala);
+            profesorService.registerNewProfesor(firstName,lastName,id,nume_curs,ora_curs,zi_curs,data_examen,ora_examen,sala);
         } catch (InvalidDataException e) {
             e.printStackTrace();
         }

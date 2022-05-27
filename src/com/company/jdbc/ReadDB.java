@@ -27,6 +27,7 @@ public class ReadDB {
                 s.registerNewStudent(
                                 rs.getString("prenume"),
                                 rs.getString("nume"),
+                                rs.getString("id"),
                                 rs.getString("clasa"),
                                 rs.getString("grupa"),
                                 rs.getString("an")
@@ -67,6 +68,7 @@ public class ReadDB {
                 p.registerNewProfesor(
                         rs.getString("prenume"),
                         rs.getString("nume"),
+                        rs.getString("id"),
                         rs.getString("nume_curs"),
                         rs.getString("ora_curs"),
                         rs.getString("zi_curs"),

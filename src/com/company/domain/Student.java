@@ -5,8 +5,8 @@ public class Student extends Persoana {
     private String grupa;
     private String an;
 
-    public Student(String prenume, String nume, String clasa, String grupa, String an) {
-        super(prenume, nume);
+    public Student(String prenume, String nume, String id,String clasa, String grupa, String an) {
+        super(prenume, nume, id);
         this.clasa = clasa;
         this.grupa = grupa;
         this.an = an;
@@ -21,13 +21,7 @@ public class Student extends Persoana {
 
     @Override
     public String toString() {
-        return "student{" +
-                "prenume='" + prenume + '\'' +
-                ", nume='" + nume + '\'' +
-                ", clasa='" + clasa + '\'' +
-                ", grupa='" + grupa + '\'' +
-                ", an=" + an +
-                '}';
+        return super.toString();
     }
 
     @Override
@@ -60,5 +54,7 @@ public class Student extends Persoana {
     public void setAn(String an) {
         this.an = an;
     }
+
+
 }
 

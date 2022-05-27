@@ -32,7 +32,7 @@ public class ProfesorService implements GenericCSV<Profesor>{
         for(int i = 0; i < profesorRepo.getSize()-1; i++){
             for(int j = i+1; j < profesorRepo.getSize(); j++)
             {
-                Profesor studentTemp = new Profesor(null,null,null);
+                Profesor studentTemp = new Profesor(null,null,null,null);
                 if(profesorRepo.get(i).getNume().compareTo(profesorRepo.get(j).getNume()) > 0 )
                 {
                     studentTemp = profesorRepo.get(i);
@@ -43,13 +43,17 @@ public class ProfesorService implements GenericCSV<Profesor>{
         }
     }
 
-    public void registerNewProfesor(String prenume,String nume,String nume_curs,String ora_curs,String zi_curs,String data_examen,String ora_examen,String sala_examen ) throws InvalidDataException {
+    public void registerNewProfesor(String prenume,String nume,String id,String nume_curs,String ora_curs,String zi_curs,String data_examen,String ora_examen,String sala_examen ) throws InvalidDataException {
         if(prenume == null || prenume.trim().isEmpty()){
             throw new InvalidDataException("Prenume Invalid");
 
         }
         if(nume == null || nume.trim().isEmpty()){
             throw new InvalidDataException("Nume Invalid");
+        }
+
+        if(id==null || id.trim().isEmpty()){
+            throw new InvalidDataException("ID invalid");
         }
 
         if(nume_curs == null || nume_curs.trim().isEmpty()){
@@ -78,7 +82,7 @@ public class ProfesorService implements GenericCSV<Profesor>{
 
         Examen examen = new Examen(data_examen,ora_examen,sala_examen);
         Curs curs = new Curs(nume_curs,ora_curs,zi_curs,examen);
-        Profesor profesor = new Profesor(prenume,nume,curs);
+        Profesor profesor = new Profesor(prenume,nume,id,curs);
         profesorRepo.add(profesor);
     }
 
@@ -91,9 +95,9 @@ public class ProfesorService implements GenericCSV<Profesor>{
             BufferedReader br = new BufferedReader(new FileReader("files/profesor.csv"));
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                Examen examen = new Examen(values[5], values[6], values[7]);
-                Curs curs = new Curs(values[2], values[3], values[4], examen);
-                Profesor profesor = new Profesor(values[0], values[1], curs);
+                Examen examen = new Examen(values[6], values[7], values[8]);
+                Curs curs = new Curs(values[3], values[4], values[5], examen);
+                Profesor profesor = new Profesor(values[0], values[1],values[2], curs);
                 profesorRepo.add(profesor);
             }
         }catch (FileNotFoundException e){
@@ -108,7 +112,7 @@ public class ProfesorService implements GenericCSV<Profesor>{
     public void write(Profesor profesor) throws IOException {
         try{
         FileWriter fw = new FileWriter("files/profesor.csv",true);
-        fw.write( "\n"+ profesor.getPrenume() + ',' + profesor.getNume() + ',' + profesor.getCurs().getNume() + ','
+        fw.write( "\n"+ profesor.getPrenume() + ',' + profesor.getNume() + ',' + profesor.getId() + ',' + profesor.getCurs().getNume() + ','
                 + profesor.getCurs().getOra() + ',' + profesor.getCurs().getZi() + ',' + profesor.getCurs().getExamen().getData_examen()
                 + ',' +profesor.getCurs().getExamen().getOra_examen() + ','
                 + profesor.getCurs().getExamen().getSala() + ',');

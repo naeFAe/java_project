@@ -3,11 +3,13 @@ package com.company.domain;
 public abstract class Persoana {
     protected String prenume;
     protected String nume;
+    protected String id;
 
     //constructor
-    public Persoana(String prenume, String nume){
+    public Persoana(String prenume, String nume, String id){
         this.prenume = prenume;
         this.nume = nume;
+        this.id = id;
     }
 
     //setter
@@ -18,5 +20,8 @@ public abstract class Persoana {
 
     public abstract String getNume();
 
+    public String getId() {
+        return id;
+    }
 }
 
